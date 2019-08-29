@@ -1,6 +1,8 @@
 import { SubscribeProvider } from '@tezos-ts/tezos-ts';
 import * as WS from 'ws';
 
+const DEFAULT_STREAMER_URL = 'wss://api.tez.ie/streamer/mainnet/subscribe';
+
 export class Subscription {
   private errorListeners: Array<(error: Error) => void> = [];
   private messageListeners: Array<(data: string) => void> = [];
@@ -83,7 +85,7 @@ export class Subscription {
 }
 
 export class StreamerProvider implements SubscribeProvider {
-  constructor(private url: string) {}
+  constructor(private url: string = DEFAULT_STREAMER_URL) {}
 
   subscribe(_filter: 'head'): Subscription {
     const ws = new WS(this.url);
